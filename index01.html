@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>With Gratitude ✨</title>
+  <!-- Fireworks Container -->
+<div class="fireworks" id="fireworks"></div>
+
+<style>
+.fireworks{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:10; /* in front of card */
+}
+
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  opacity:0.9;
+  animation:particleMove 1s linear forwards;
+}
+
+@keyframes particleMove {
+  0%{ transform: translate(0,0) scale(1); opacity:1;}
+  100%{ transform: translate(var(--dx), var(--dy)) scale(0.3); opacity:0;}
+}
+</style>
+
+<script>
+const fireworksContainer = document.getElementById('fireworks');
+
+function createFireworkParticles(){
+  const particlesCount = 15; // number of sparks per firework
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight/2; // random height
+
+  for(let i=0;i<particlesCount;i++){
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    p.style.left = x + 'px';
+    p.style.top = y + 'px';
+    const angle = Math.random()*2*Math.PI;
+    const distance = 50 + Math.random()*80; // spread
+    p.style.setProperty('--dx', distance*Math.cos(angle) + 'px');
+    p.style.setProperty('--dy', distance*Math.sin(angle) + 'px');
+    p.style.background = `hsl(${Math.random()*360}, 100%, 60%)`;
+
+    fireworksContainer.appendChild(p);
+
+    setTimeout(()=>{
+      if(fireworksContainer.contains(p)) fireworksContainer.removeChild(p);
+    },1000);
+  }
+}
+
+// launch fireworks every 250ms
+setInterval(createFireworkParticles, 250);
+</script>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* Card */
+.card{
+  width:100%;
+  max-width:390px;
+  border-radius:26px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  box-shadow:0 30px 60px rgba(0,0,0,0.55);
+  animation:pop 1s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.92);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* Photo */
+.photo{
+  position:relative;
+  height:260px;
+  background:url('me.jpg') center/cover no-repeat;
+}
+
+/* Photo → card blend */
+.photo::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:140px;
+  background:linear-gradient(
+    to bottom,
+    rgba(15,32,39,0) 0%,
+    rgba(15,32,39,0.55) 45%,
+    rgba(15,32,39,0.95) 100%
+  );
+}
+
+/* Content */
+.content{
+  padding:28px 22px;
+  text-align:center;
+  color:#f2f4f5;
+}
+
+/* Headings */
+h1{
+  font-family:'Playfair Display', serif;
+  font-size:25px;
+  margin-bottom:12px;
+  color:#ffffff;
+}
+
+/* Sparkling New Year Text */
+.sparkle {
+  display:inline-block;
+  position:relative;
+  color:#ffd700;
+  font-weight:bold;
+  animation: glow 1.5s infinite alternate;
+}
+
+.sparkle::after {
+  content:"✨";
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  font-size:18px;
+  animation: twinkle 1s infinite alternate;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700; }
+  50% { text-shadow: 0 0 10px #ffea00, 0 0 20px #ffd700; }
+  100% { text-shadow: 0 0 15px #ffd700, 0 0 30px #ffea00; }
+}
+
+@keyframes twinkle {
+  0% { transform: scale(0.8) rotate(0deg); opacity:0.7; }
+  50% { transform: scale(1.2) rotate(20deg); opacity:1; }
+  100% { transform: scale(1) rotate(-20deg); opacity:0.8; }
+}
+
+/* Typed message */
+.message{
+  font-family:'Poppins', sans-serif;
+  font-size:14.8px;
+  line-height:1.7;
+  min-height:72px;
+  color:#e6ebee;
+}
+
+/* Divider */
+.divider{
+  height:1px;
+  background:rgba(255,255,255,0.25);
+  margin:18px 0;
+}
+
+/* New year message */
+.newyear{
+  font-family:'Poppins', sans-serif;
+  font-size:14.6px;
+  line-height:1.7;
+  color:#f1f5f7;
+}
+
+/* Signature */
+.signature{
+  margin-top:10px;
+  font-family:'Dancing Script', cursive;
+  font-size:20px;
+  color:#ffd9a6;
+}
+
+/* Cursor */
+.cursor{
+  display:inline-block;
+  width:8px;
+  background:#ffd9a6;
+  margin-left:4px;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,50%{opacity:1}
+  51%,100%{opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="photo"></div>
+
+  <div class="content">
+    <h1>Thank You!<br>💌<br></h1>
+
+    <div class="message">
+      <span id="typeText"></span><span class="cursor"></span>
+    </div>
+
+    <div class="divider"></div>
+
+    <h1 class="sparkle">Happy New Year ✨</h1>
+    <div class="newyear">
+      Wishing you and your family a year filled with calm days,  
+      good health, steady growth, and moments worth remembering.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="signature">
+      — Mallikarjun
+    </div>
+  </div>
+</div>
+
+<script>
+const text = `Your wishes, Calls, and Messages made my Day Brighter✨. 
+THANK YOU from bottom of my heart♥️`;
+
+let i = 0;
+const speed = 38;
+const target = document.getElementById("typeText");
+
+function typeEffect(){
+  if(i < text.length){
+    target.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+    i++;
+    setTimeout(typeEffect, speed);
+  }
+}
+
+window.onload = typeEffect;
+</script>
+
+</body>
+</html>
